@@ -1,0 +1,31 @@
+{
+  "name": "io.github.corbinvachal48/agentrender-mcp",
+  "description": "URL to screenshot, PDF, or structured extract for AI agents via MCP.",
+  "repository": {
+    "url": "https://github.com/corbinvachal48/agentrender-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registry_name": "pypi",
+      "name": "agentrender-mcp",
+      "version": "0.1.0",
+      "package_arguments": [],
+      "environment_variables": [
+        {
+          "name": "AGENTRENDER_API_KEY",
+          "description": "AgentRender API key (akr_…)",
+          "is_required": true,
+          "is_secret": true
+        },
+        {
+          "name": "AGENTRENDER_BASE_URL",
+          "description": "API base URL",
+          "is_required": false,
+          "default": "https://api.agentrenderapi.com"
+        }
+      ]
+    }
+  ]
+}
