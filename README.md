@@ -86,7 +86,7 @@ curl -s -X POST https://api.agentrenderapi.com/v1/extract \
 
 - Hosted Streamable HTTP MCP is not shipped in this package yet; use stdio as above.
 - Do not commit API keys. Rotate any key that leaks.
-- Support: hello@ via product site / waitlist flow.
+- Support: hello@agentrenderapi.com
 
 ## License
 
