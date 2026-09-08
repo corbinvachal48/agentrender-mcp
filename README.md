@@ -1,5 +1,7 @@
 # AgentRender MCP
 
+[![Listed on MCP Servers](https://img.shields.io/badge/MCP%20Servers-listed-0A7AEA)](https://mcpservers.org/servers/agentrenderapi-com)
+
 **URL → screenshot, PDF, or structured extract for AI agents** via [MCP](https://modelcontextprotocol.io) (stdio) + REST.
 
 - Site: https://agentrenderapi.com  
