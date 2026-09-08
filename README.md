@@ -7,6 +7,9 @@
 
 Tools: `screenshot` · `pdf` · `extract`
 
+[![Listed on mcpservers.org](https://img.shields.io/badge/MCP-mcpservers.org-111111)](https://mcpservers.org/servers/agentrenderapi-com) [![Glama](https://img.shields.io/badge/MCP-Glama-0A7CFF)](https://glama.ai/mcp/servers/corbinvachal48/agentrender-mcp)
+
+
 ## Install
 
 ```bash
