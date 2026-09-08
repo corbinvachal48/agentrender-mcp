@@ -1,4 +1,5 @@
 {
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.corbinvachal48/agentrender-mcp",
   "description": "URL to screenshot, PDF, or structured extract for AI agents via MCP.",
   "repository": {
@@ -8,21 +9,25 @@
   "version": "0.1.0",
   "packages": [
     {
-      "registry_name": "pypi",
-      "name": "agentrender-mcp",
+      "registryType": "pypi",
+      "identifier": "agentrender-mcp",
       "version": "0.1.0",
-      "package_arguments": [],
-      "environment_variables": [
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
         {
           "name": "AGENTRENDER_API_KEY",
-          "description": "AgentRender API key (akr_…)",
-          "is_required": true,
-          "is_secret": true
+          "description": "AgentRender API key (akr_\u2026)",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
         },
         {
           "name": "AGENTRENDER_BASE_URL",
           "description": "API base URL",
-          "is_required": false,
+          "isRequired": false,
+          "format": "string",
           "default": "https://api.agentrenderapi.com"
         }
       ]

@@ -91,3 +91,5 @@ curl -s -X POST https://api.agentrenderapi.com/v1/extract \
 ## License
 
 MIT
+
+<!-- mcp-name: io.github.corbinvachal48/agentrender-mcp -->
