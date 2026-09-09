@@ -6,12 +6,12 @@
     "url": "https://github.com/corbinvachal48/agentrender-mcp",
     "source": "github"
   },
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "agentrender-mcp",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "transport": {
         "type": "stdio"
       },
@@ -30,6 +30,31 @@
           "format": "string",
           "default": "https://api.agentrenderapi.com"
         }
+      ]
+    }
+  ],
+  "title": "AgentRender",
+  "websiteUrl": "https://agentrenderapi.com",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/corbinvachal48/agentrender-mcp/main/assets/logo-512.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    },
+    {
+      "src": "https://raw.githubusercontent.com/corbinvachal48/agentrender-mcp/main/assets/logo-192.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "192x192"
+      ]
+    },
+    {
+      "src": "https://raw.githubusercontent.com/corbinvachal48/agentrender-mcp/main/assets/logo-64.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "64x64"
       ]
     }
   ]

@@ -1,5 +1,9 @@
 # AgentRender MCP
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/corbinvachal48/agentrender-mcp/main/assets/logo.png" alt="AgentRender" width="160" height="160" />
+</p>
+
 [![Listed on MCP Servers](https://img.shields.io/badge/MCP%20Servers-listed-0A7AEA)](https://mcpservers.org/servers/agentrenderapi-com) [![Glama](https://img.shields.io/badge/MCP-Glama-0A7CFF)](https://glama.ai/mcp/servers/corbinvachal48/agentrender-mcp)
 
 **URL → screenshot, PDF, or structured extract for AI agents** via [MCP](https://modelcontextprotocol.io) (stdio) + REST.
