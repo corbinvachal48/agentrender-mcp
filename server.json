@@ -2,7 +2,7 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.corbinvachal48/agentrender-mcp",
   "title": "AgentRender",
-  "description": "URL to screenshot, PDF, or structured extract for AI agents. Free key, no card.",
+  "description": "URL to screenshot, PDF, or extract for AI agents. Free 150 renders/mo, then $17/mo.",
   "repository": {
     "url": "https://github.com/corbinvachal48/agentrender-mcp",
     "source": "github"

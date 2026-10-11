@@ -10,6 +10,8 @@
 
 > **Get a free API key instantly — 150 renders/month, no card:** https://agentrenderapi.com/#waitlist
 > (or just ask your agent to call the `get_free_key` tool with your email)
+>
+> **Pricing:** Free — 150 renders/month with the free key (no card). Need more? Starter $17/month (2,000 renders/month): https://agentrenderapi.com/#pricing
 
 Tools: `screenshot` (returns the image) · `pdf` (saves a file, returns its path) · `extract` (title, text, links as JSON) · `get_free_key`
 
@@ -89,7 +91,7 @@ agentrender-mcp          # or: python -m agentrender_mcp.server
 
 ## Plans
 
-Free: 150 renders/month, no card. Paid: Starter $17 · Growth $79 · Scale $259 per month — https://agentrenderapi.com/#pricing
+Free: 150 renders/month with the free key, no card. Then Starter $17/month (2,000 renders) · Growth $79 · Scale $259 — https://agentrenderapi.com/#pricing
 
 ## REST
 
