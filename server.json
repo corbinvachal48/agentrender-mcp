@@ -1,11 +1,13 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.corbinvachal48/agentrender-mcp",
-  "description": "URL to screenshot, PDF, or structured extract for AI agents via MCP.",
+  "title": "AgentRender",
+  "description": "URL to screenshot, PDF, or structured extract for AI agents. Free key, no card.",
   "repository": {
     "url": "https://github.com/corbinvachal48/agentrender-mcp",
     "source": "github"
   },
+  "websiteUrl": "https://agentrenderapi.com",
   "version": "0.1.1",
   "packages": [
     {
@@ -18,8 +20,8 @@
       "environmentVariables": [
         {
           "name": "AGENTRENDER_API_KEY",
-          "description": "AgentRender API key (akr_\u2026)",
-          "isRequired": true,
+          "description": "AgentRender API key (akr_...). Free, instant, no card: https://agentrenderapi.com/#waitlist (or call the get_free_key tool)",
+          "isRequired": false,
           "isSecret": true,
           "format": "string"
         },
@@ -33,8 +35,21 @@
       ]
     }
   ],
-  "title": "AgentRender",
-  "websiteUrl": "https://agentrenderapi.com",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.agentrenderapi.com/mcp",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Bearer akr_... API key. Free, instant, no card: https://agentrenderapi.com/#waitlist",
+          "isRequired": true,
+          "isSecret": true,
+          "format": "string"
+        }
+      ]
+    }
+  ],
   "icons": [
     {
       "src": "https://raw.githubusercontent.com/corbinvachal48/agentrender-mcp/main/assets/logo-512.png",
