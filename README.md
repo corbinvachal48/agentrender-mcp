@@ -6,62 +6,33 @@
 
 [![Listed on MCP Servers](https://img.shields.io/badge/MCP%20Servers-listed-0A7AEA)](https://mcpservers.org/servers/agentrenderapi-com) [![Glama](https://img.shields.io/badge/MCP-Glama-0A7CFF)](https://glama.ai/mcp/servers/corbinvachal48/agentrender-mcp)
 
-**URL → screenshot, PDF, or structured extract for AI agents** via [MCP](https://modelcontextprotocol.io) (stdio) + REST.
+**URL → screenshot, PDF, or structured extract for AI agents** via [MCP](https://modelcontextprotocol.io).
 
-- Site: https://agentrenderapi.com  
-- API: https://api.agentrenderapi.com  
+> **Get a free API key instantly — 150 renders/month, no card:** https://agentrenderapi.com/#waitlist
+> (or just ask your agent to call the `get_free_key` tool with your email)
 
-Tools: `screenshot` · `pdf` · `extract`
+Tools: `screenshot` (returns the image) · `pdf` (saves a file, returns its path) · `extract` (title, text, links as JSON) · `get_free_key`
 
-## Install
+## Quick start
 
-```bash
-pip install agentrender-mcp
-# or from this repo:
-pip install .
-```
+1. Get a free key: https://agentrenderapi.com/#waitlist (instant, no card).
+2. Add the server to your client (below) with `uvx agentrender-mcp`. Needs [uv](https://docs.astral.sh/uv/getting-started/installation/).
+3. Ask your agent: *"Take a screenshot of https://example.com"*.
 
-Requires an AgentRender API key (`akr_…`) from https://agentrenderapi.com (free waitlist path or paid Starter $17 / Growth $79 / Scale $259).
-
-## Environment
-
-| Variable | Default | Purpose |
-|----------|---------|---------|
-| `AGENTRENDER_API_KEY` | _(required)_ | Bearer API key |
-| `AGENTRENDER_BASE_URL` | `https://api.agentrenderapi.com` | API base |
-
-## Run (stdio)
+### Claude Code
 
 ```bash
-export AGENTRENDER_API_KEY=akr_your_key
-agentrender-mcp
-# or: python -m agentrender_mcp.server
+claude mcp add agentrender -e AGENTRENDER_API_KEY=akr_your_key -- uvx agentrender-mcp
 ```
 
-## Cursor / Claude Desktop
+### Cursor (`~/.cursor/mcp.json`) / Claude Desktop (`claude_desktop_config.json`)
 
 ```json
 {
   "mcpServers": {
     "agentrender": {
-      "command": "agentrender-mcp",
-      "env": {
-        "AGENTRENDER_API_KEY": "akr_your_key",
-        "AGENTRENDER_BASE_URL": "https://api.agentrenderapi.com"
-      }
-    }
-  }
-}
-```
-
-If `agentrender-mcp` is not on `PATH`, use your Python:
-
-```json
-{
-  "mcpServers": {
-    "agentrender": {
-      "command": "python",
-      "args": ["-m", "agentrender_mcp.server"],
+      "command": "uvx",
+      "args": ["agentrender-mcp"],
       "env": {
         "AGENTRENDER_API_KEY": "akr_your_key"
       }
@@ -70,15 +41,57 @@ If `agentrender-mcp` is not on `PATH`, use your Python:
 }
 ```
 
+### Hosted MCP (no install)
+
+Remote Streamable HTTP endpoint: `https://api.agentrenderapi.com/mcp` with header `Authorization: Bearer akr_your_key`.
+
+```bash
+claude mcp add --transport http agentrender https://api.agentrenderapi.com/mcp \
+  --header "Authorization: Bearer akr_your_key"
+```
+
+Cursor:
+
+```json
+{
+  "mcpServers": {
+    "agentrender": {
+      "url": "https://api.agentrenderapi.com/mcp",
+      "headers": { "Authorization": "Bearer akr_your_key" }
+    }
+  }
+}
+```
+
+### pip instead of uvx
+
+```bash
+pip install agentrender-mcp
+export AGENTRENDER_API_KEY=akr_your_key
+agentrender-mcp          # or: python -m agentrender_mcp.server
+```
+
+## Environment
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `AGENTRENDER_API_KEY` | _(required)_ | Your `akr_` key — [free, instant](https://agentrenderapi.com/#waitlist) |
+| `AGENTRENDER_BASE_URL` | `https://api.agentrenderapi.com` | API base |
+
 ## Tools
 
-| Tool | Maps to | Notes |
-|------|---------|--------|
-| `screenshot` | `POST /v1/screenshot` | PNG/JPEG/WebP; returns `image_base64` + receipt |
-| `pdf` | `POST /v1/pdf` | Returns `pdf_base64` + receipt |
-| `extract` | `POST /v1/extract` | Title, meta, canonical, text, links (non-LLM) |
+| Tool | Maps to | Returns |
+|------|---------|---------|
+| `screenshot` | `POST /v1/screenshot` | MCP image block (JPEG by default; `format` = png/webp) + short receipt. Optional `save_path`. |
+| `pdf` | `POST /v1/pdf` | Saves the PDF locally (`save_path` or temp dir); returns path, bytes, page count. |
+| `extract` | `POST /v1/extract` | Title, meta description, canonical, main text, links (non-LLM). |
+| `get_free_key` | `POST /v1/eval-key` | Issues a free key (150/mo) for your email and uses it for the session. |
 
-## REST smoke
+## Plans
+
+Free: 150 renders/month, no card. Paid: Starter $17 · Growth $79 · Scale $259 per month — https://agentrenderapi.com/#pricing
+
+## REST
 
 ```bash
 curl -s https://api.agentrenderapi.com/health
@@ -90,7 +103,6 @@ curl -s -X POST https://api.agentrenderapi.com/v1/extract \
 
 ## Notes
 
-- Hosted Streamable HTTP MCP is not shipped in this package yet; use stdio as above.
 - Do not commit API keys. Rotate any key that leaks.
 - Support: hello@agentrenderapi.com
 
