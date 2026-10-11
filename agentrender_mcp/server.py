@@ -244,7 +244,7 @@ def extract(
 @mcp.tool()
 def get_free_key(email: str) -> dict[str, Any]:
     """Get a free AgentRender API key instantly (150 renders/month, no card) for this
-    email. The key works immediately for this session; add it to AGENTRENDER_API_KEY
+    email. If the email already has a key, it is emailed to that address (not shown). The key works immediately for this session; add it to AGENTRENDER_API_KEY
     in your MCP config to keep it."""
     global _session_key
     data = _request(
@@ -254,6 +254,16 @@ def get_free_key(email: str) -> dict[str, Any]:
         with_key=False,
     )
     key = (data.get("api_key") or "").strip() if isinstance(data, dict) else ""
+    if not key and isinstance(data, dict) and data.get("already_issued"):
+        # Existing keys are never displayed again — the API emails them to the owner.
+        return {
+            "ok": True,
+            "api_key": None,
+            "emailed": bool(data.get("emailed")),
+            "message": data.get("message")
+            or "This email already has a free key; it was emailed to that address.",
+            "note": "Ask the user to check their inbox, then set AGENTRENDER_API_KEY to the key and restart this MCP server.",
+        }
     if not key:
         raise RuntimeError(f"No key returned. Get one at {FREE_KEY_URL} or email {SUPPORT_EMAIL}.")
     _session_key = key

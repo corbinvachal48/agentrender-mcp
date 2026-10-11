@@ -1,3 +1,3 @@
 """AgentRender MCP stdio server — screenshot, pdf, extract."""
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
