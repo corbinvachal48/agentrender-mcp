@@ -30,6 +30,7 @@ from agentrender_mcp import __version__
 
 FREE_KEY_URL = "https://agentrenderapi.com/#waitlist"
 SUPPORT_EMAIL = "hello@agentrenderapi.com"
+PRICING_URL = "https://agentrenderapi.com/#pricing"
 NO_KEY_MESSAGE = (
     "AGENTRENDER_API_KEY is not set. Get a free key instantly "
     f"(150 renders/month, no card): {FREE_KEY_URL} — or call the get_free_key "
@@ -96,12 +97,38 @@ def _request(path: str, body: dict[str, Any], *, timeout: float, with_key: bool)
         if not msg and isinstance(data, dict) and isinstance(data.get("detail"), str):
             msg = data["detail"]
         msg = msg or resp.text[:300]
+        code = err.get("code") if isinstance(err, dict) else None
         if resp.status_code == 401:
-            msg = f"{msg} Get a free key instantly (150 renders/month, no card): {FREE_KEY_URL}"
-        elif resp.status_code in (402, 429):
-            msg = f"{msg} Upgrade or check usage at https://agentrenderapi.com/#pricing"
+            if FREE_KEY_URL not in msg:
+                msg = f"{msg} Get a free key instantly (150 renders/month, no card): {FREE_KEY_URL}"
+        elif resp.status_code == 402 or code == "quota_exceeded":
+            up = (err or {}).get("upgrade_url") or resp.headers.get("x-upgrade-url") or PRICING_URL
+            if up not in msg:
+                msg = f"{msg} Upgrade: {up}"
+            msg += " (Tell the user: open the upgrade link to subscribe; this same API key keeps working with the new limits right after checkout.)"
+        elif resp.status_code == 429:
+            msg = f"{msg} Wait a minute and retry, or upgrade for higher limits: {PRICING_URL}"
         raise RuntimeError(f"HTTP {resp.status_code}: {msg}")
+    quota = _quota_from_headers(resp.headers)
+    if quota and isinstance(data, dict):
+        data["quota"] = quota
     return data  # type: ignore[return-value]
+
+
+def _quota_from_headers(h: Any) -> dict[str, Any] | None:
+    """Remaining monthly renders (from X-Quota-* response headers)."""
+    rem = h.get("x-quota-remaining")
+    lim = h.get("x-quota-limit")
+    if rem is None or lim is None:
+        return None
+    try:
+        q: dict[str, Any] = {"plan": h.get("x-quota-plan") or "free", "remaining": int(rem), "limit": int(lim)}
+    except ValueError:
+        return None
+    if h.get("x-upgrade-url"):
+        q["upgrade_url"] = h.get("x-upgrade-url")
+        q["note"] = "Running low on renders this month — upgrade to keep going."
+    return q
 
 
 def _post(path: str, body: dict[str, Any], *, timeout: float = 90.0) -> dict[str, Any]:
@@ -152,6 +179,8 @@ def screenshot(
     raw = base64.b64decode(b64)
     mime = data.get("content_type") or f"image/{'jpeg' if format == 'jpg' else format}"
     info = {"ok": True, "content_type": mime, "bytes": len(raw), "receipt": _receipt_summary(data)}
+    if data.get("quota"):
+        info["quota"] = data["quota"]
     if save_path:
         p = _out_path(save_path, "")
         p.write_bytes(raw)
@@ -184,7 +213,7 @@ def pdf(
     p = _out_path(save_path, ".pdf")
     p.write_bytes(raw)
     pages = len(re.findall(rb"/Type\s*/Page(?!s)", raw))
-    return {
+    out = {
         "ok": True,
         "saved_to": str(p),
         "bytes": len(raw),
@@ -192,6 +221,9 @@ def pdf(
         "content_type": "application/pdf",
         "receipt": _receipt_summary(data),
     }
+    if data.get("quota"):
+        out["quota"] = data["quota"]
+    return out
 
 
 @mcp.tool()

@@ -93,6 +93,8 @@ agentrender-mcp          # or: python -m agentrender_mcp.server
 
 Free: 150 renders/month with the free key, no card. Then Starter $17/month (2,000 renders) · Growth $79 · Scale $259 — https://agentrenderapi.com/#pricing
 
+Every result includes a `quota` block (renders left this month). When the free 150 run out, tools return a clear `quota_exceeded` error with an `upgrade_url` — a Stripe checkout link tied to your key. Subscribe there and **the same key is upgraded within seconds**; just retry. Starting fresh from the website instead? Your new key is shown on the checkout confirmation page and emailed instantly.
+
 ## REST
 
 ```bash
