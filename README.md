@@ -43,6 +43,17 @@ claude mcp add agentrender -e AGENTRENDER_API_KEY=akr_your_key -- uvx agentrende
 }
 ```
 
+### ChatGPT (OAuth — no API key)
+
+AgentRender works as a ChatGPT app/connector with OAuth sign-in (no key to paste):
+
+1. In ChatGPT, open **Settings → Apps & Connectors** (developer mode, until the directory listing is live) and choose **Create / Add connector**.
+2. MCP server URL: `https://api.agentrenderapi.com/mcp` · Authentication: **OAuth**. ChatGPT discovers the authorization server automatically (RFC 9728 protected-resource metadata + dynamic client registration).
+3. Click **Connect** and sign in with Google or email (Auth0). A free account (150 renders/month) is created on first sign-in.
+4. Try: *"Take a screenshot of https://example.com"*, *"Save https://example.com as a PDF"*, or *"Extract the headings from https://en.wikipedia.org/wiki/Web_scraping"*.
+
+Monthly allowances, rate limits and resets: https://agentrenderapi.com/limits · Privacy: https://agentrenderapi.com/privacy
+
 ### Hosted MCP (no install)
 
 Remote Streamable HTTP endpoint: `https://api.agentrenderapi.com/mcp` with header `Authorization: Bearer akr_your_key`.
